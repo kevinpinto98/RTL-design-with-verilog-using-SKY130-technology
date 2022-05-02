@@ -1,0 +1,35 @@
+To synthesize our design we use yosys. For this we first need to invoke yosys. We do this by running the command:
+% yosys
+
+This will result in a prompt:
+yosys>
+
+1. To read the library we use the command:
+% read_liberty -lib [path_to_library (.lib file)]
+
+2. Following this we have to read the design
+% read_verilog [file_name]
+Note: If our design spans more than one file we need to mention all those files in the read_verilog command. File name must contain the extension for example: .v
+
+3. Next we need to synthesize our module
+% synth -top [module_name_to_be_synthesized]
+Note: Here instead of using the file_name as good_mux.v we used only good_mux
+
+If there is any flop in the design we'll need to execute another additional command which we'll see later
+
+4. Command to generate the netlist
+% abc -liberty [path to the .lib file]
+
+5. Command to see the logic that has been realized (It basically shows the block diagram)
+% show
+
+6. Command to write the netlist
+% write_verilog [good_mux_netlist.v]
+
+We could also use the command:
+% write_verilog -noattr [good_mux_netlist.v]
+
+After this exit yosys.
+
+To do the gls we need to:
+% iverilog ../my_lib/verilog_model/primitives.v ../my_lib/verilog_model/sky130_fd_sc_hd.v [netlist_file] [tb_file_for_rtl]

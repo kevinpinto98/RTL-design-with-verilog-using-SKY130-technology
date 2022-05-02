@@ -1,0 +1,9 @@
+Commands for iverilog:
+1. Command for creating an executable
+% iverilog [design_file_name] [testbench_file_for_design]
+
+2. This creates an executable called a.out, to run it use the command:
+% ./a.out
+
+3. We will load the corresponding vcd file into our simulator
+% gtkwave [the .vcd file that was opened for output]

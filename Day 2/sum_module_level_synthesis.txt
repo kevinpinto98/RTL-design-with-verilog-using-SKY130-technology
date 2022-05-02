@@ -1,0 +1,23 @@
+We will now perform the sub-module level synthesis. We do this by running the command:
+% yosys
+
+This will result in a prompt:
+yosys>
+
+1. To read the library we use the command:
+% read_liberty -lib [path_to_library (.lib file)]
+
+2. Following this we have to read the design
+% read_verilog [file_name]
+Note: If our design spans more than one file we need to mention all those files in the read_verilog command. File name must contain the extension for example: .v
+
+3. Next we need to synthesize our module
+% synth -top [submodule_name_to_be_synthesized]
+
+For example: synth -top sub_module1
+This command does the synthesis at sub-module1 level even though we have read the RTL at the top level. Why do we dot this?
+Answer: Let's say we have a mux that is instantiated in a design multiple times. Instead of synthesizing the multiple instantiations of the mux
+we just synthesize it once and then replicate it and stitch it together in the top module. This saves a lot of time. This approach is mainly used when our
+design is huge.
+
+*Important: We control which sub-module we are going to synthesize by using the "synth -top [submodule_name]" keyword

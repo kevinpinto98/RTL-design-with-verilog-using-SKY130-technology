@@ -1,0 +1,33 @@
+To synthesize our design we use yosys. For this we first need to invoke yosys. We do this by running the command:
+% yosys
+
+This will result in a prompt:
+yosys>
+
+1. To read the library we use the command:
+% read_liberty -lib [path_to_library (.lib file)]
+
+2. Following this we have to read the design
+% read_verilog [file_name]
+Note: If our design spans more than one file we need to mention all those files in the read_verilog command. File name must contain the extension for example: .v
+Here, file_name is opt_check.v
+
+3. Next we need to synthesize our module
+% synth -top [module_name_to_be_synthesized_in_ .v _ file]
+Note: Here instead of using the file_name as opt_check.v we used only good_mux since opt_check is the name of the module in opt_check.v
+
+If we have multiple modules instantiated within our main design then we run the following command after command 3:
+% flatten
+
+If we have a D flip-flop in our design we use the following command:
+% dfflibmap -liberty [path to the .lib file]
+Note: We must run the dfflibmap command before running the abc command if we have a d-ff in our design
+
+4. Command to do the constant propagation and optimization is:
+% opt_clean -purge
+
+5. Command to generate the netlist 
+% abc -liberty [path to the .lib file]
+
+6. Command to see the logic that has been realized (It basically shows the block diagram)
+% show
